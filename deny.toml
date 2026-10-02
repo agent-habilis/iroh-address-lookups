@@ -32,5 +32,5 @@ ignore = [
 allow-git = [
     "https://github.com/agent-habilis/iroh",
     "https://github.com/agent-habilis/net-tools",
-    "https://github.com/rkuhn/swarm-discovery",
+    "https://github.com/agent-habilis/swarm-discovery",
 ]
