@@ -20,13 +20,13 @@ workspace = true
 
 [dependencies]
 derive_more = { version = "2.1", features = ["debug"] }
-# FORK: fofoca-network/iroh, not crates.io. See the repo README -- this fork
+# FORK: agent-habilis/iroh, not crates.io. See the repo README -- this fork
 # exists only to repoint these three lines, and carries no functional change.
-# Same reasoning as the mdns crate: this sits between fofoca and iroh, so a
+# Same reasoning as the mdns crate: this sits between habilis-network and iroh, so a
 # crates.io edge here puts a second iroh in the graph.
-iroh = { version = "=1.0.3", git = "https://github.com/fofoca-network/iroh", rev = "66003af753b5d221edb6f5407a4fda6a7a4d213c", default-features = false }
-iroh-base = { version = "=1.0.3", git = "https://github.com/fofoca-network/iroh", rev = "66003af753b5d221edb6f5407a4fda6a7a4d213c", default-features = false, features = ["key", "relay"] }
-iroh-dns = { version = "=1.0.3", git = "https://github.com/fofoca-network/iroh", rev = "66003af753b5d221edb6f5407a4fda6a7a4d213c" }
+iroh = { version = "=1.0.3", git = "https://github.com/agent-habilis/iroh", rev = "c814688e6c0967b2764efe7159059d1d68c4b2f4", default-features = false }
+iroh-base = { version = "=1.0.3", git = "https://github.com/agent-habilis/iroh", rev = "c814688e6c0967b2764efe7159059d1d68c4b2f4", default-features = false, features = ["key", "relay"] }
+iroh-dns = { version = "=1.0.3", git = "https://github.com/agent-habilis/iroh", rev = "c814688e6c0967b2764efe7159059d1d68c4b2f4" }
 n0-mainline = "0.5"
 n0-error = "1.0.0"
 n0-future = "0.3.2"
@@ -35,7 +35,7 @@ tracing = "0.1.44"
 url = "2.5.3"
 
 [dev-dependencies]
-iroh = { version = "=1.0.3", git = "https://github.com/fofoca-network/iroh", rev = "66003af753b5d221edb6f5407a4fda6a7a4d213c" }
+iroh = { version = "=1.0.3", git = "https://github.com/agent-habilis/iroh", rev = "c814688e6c0967b2764efe7159059d1d68c4b2f4" }
 clap = { version = "4", features = ["derive"] }
 n0-tracing-test = "0.3"
 tokio = { version = "1.49", features = ["rt-multi-thread", "macros", "io-std", "io-util"] }
