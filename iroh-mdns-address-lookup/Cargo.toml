@@ -30,8 +30,8 @@ futures-util = "0.3"
 # below stops satisfying the trait the forked Endpoint hands back (E0308). The
 # only other way to reconcile that is a [patch.crates-io] in every consumer's
 # workspace root, restated by hand and silently wrong when one drifts.
-iroh = { version = "=1.0.3", git = "https://github.com/agent-habilis/iroh", rev = "c2e81ee200e434adeb3a1c0067db47e6f0898998", default-features = false }
-iroh-base = { version = "=1.0.3", git = "https://github.com/agent-habilis/iroh", rev = "c2e81ee200e434adeb3a1c0067db47e6f0898998", default-features = false, features = ["key"] }
+iroh = { version = "=1.0.3", git = "https://github.com/agent-habilis/iroh", rev = "51e891cff102a7e0696a5a931c2e9770b0225b59", default-features = false }
+iroh-base = { version = "=1.0.3", git = "https://github.com/agent-habilis/iroh", rev = "51e891cff102a7e0696a5a931c2e9770b0225b59", default-features = false, features = ["key"] }
 n0-error = "1.0.0"
 n0-future = "0.3.2"
 n0-watcher = "1"
@@ -46,7 +46,7 @@ tokio-stream = { version = "0.1.15", features = ["sync"] }
 tracing = "0.1.44"
 
 [dev-dependencies]
-iroh = { version = "=1.0.3", git = "https://github.com/agent-habilis/iroh", rev = "c2e81ee200e434adeb3a1c0067db47e6f0898998" }
+iroh = { version = "=1.0.3", git = "https://github.com/agent-habilis/iroh", rev = "51e891cff102a7e0696a5a931c2e9770b0225b59" }
 n0-tracing-test = "0.3"
 rand = "0.10"
 rand_chacha = "0.10"
