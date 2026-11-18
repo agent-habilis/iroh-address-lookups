@@ -26,6 +26,9 @@ license-files = [{ path = "LICENSE", hash = 0xbd0eed23 }]
 [advisories]
 ignore = [
     "RUSTSEC-2024-0436", # paste unmaintained
+    # Unmaintained, with no fixed version and no known vulnerability. Path: wmi 0.18.4 (Windows
+    # only), through the netwatch fork of net-tools.
+    { id = "RUSTSEC-2026-0543", reason = "chrono: unmaintained, no fixed version, no known vulnerability; via wmi 0.18.4 (netwatch fork, Windows only)" },
 ]
 
 [sources]
