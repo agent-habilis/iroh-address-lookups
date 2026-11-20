@@ -1886,7 +1886,8 @@ dependencies = [
 [[package]]
 name = "n0-mainline"
 version = "0.8.0"
-source = "git+https://github.com/agent-habilis/n0-mainline?rev=6fc9fb4a47676b0ef53a318221f7697ed172820e#6fc9fb4a47676b0ef53a318221f7697ed172820e"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9624231d16070e2c4de0bbd37246eb8052ffdb832d6a3fa501abdbf4cb9549c9"
 dependencies = [
  "crc",
  "dyn-clone",

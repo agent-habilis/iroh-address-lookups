@@ -27,10 +27,7 @@ derive_more = { version = "2.1", features = ["debug"] }
 iroh = { version = "=1.0.3", git = "https://github.com/agent-habilis/iroh", rev = "aa9814fb0f3e9a31cef3be5622ef5731c4db61fd", default-features = false }
 iroh-base = { version = "=1.0.3", git = "https://github.com/agent-habilis/iroh", rev = "aa9814fb0f3e9a31cef3be5622ef5731c4db61fd", default-features = false, features = ["key", "relay"] }
 iroh-dns = { version = "=1.0.3", git = "https://github.com/agent-habilis/iroh", rev = "aa9814fb0f3e9a31cef3be5622ef5731c4db61fd" }
-# FORK: n0-mainline 0.8.0 from agent-habilis/n0-mainline main, which equals
-# upstream v0.8.0. It fixes the bencode abort on a crafted datagram. Its noq-udp
-# requirement resolves to crates.io noq-udp 1.5.0, so the graph has 1 copy.
-n0-mainline = { version = "0.8.0", git = "https://github.com/agent-habilis/n0-mainline", rev = "6fc9fb4a47676b0ef53a318221f7697ed172820e" }
+n0-mainline = "0.8.0"
 n0-error = "1.0.0"
 n0-future = "0.3.2"
 tokio = { version = "1.49", default-features = false, features = ["sync"] }

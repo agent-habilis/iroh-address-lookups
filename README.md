@@ -4,15 +4,14 @@
 >
 > It exists to repoint seven dependency lines — `iroh`, `iroh-base`, `iroh-dns`
 > in the two member manifests — from crates.io at
-> [`agent-habilis/iroh`](https://github.com/agent-habilis/iroh). Only one more
-> line differs from upstream `n0-computer/iroh-address-lookups` (see below), and
-> nothing here is upstreamable: n0 will never point their crates at our fork.
+> [`agent-habilis/iroh`](https://github.com/agent-habilis/iroh). Nothing else
+> differs from upstream `n0-computer/iroh-address-lookups` except the
+> `n0-mainline` version (see below), and nothing here is upstreamable: n0 will
+> never point their crates at our fork.
 >
-> That line is `n0-mainline`. It takes 0.8.0 from the `main` branch of
-> [`agent-habilis/n0-mainline`](https://github.com/agent-habilis/n0-mainline),
-> which equals upstream v0.8.0 with no change of ours. 0.8 fixes a bencode stack
-> overflow that aborts the process on one crafted datagram. It also defaults the
-> DHT to client mode and sends the BEP 44 put without a target.
+> `n0-mainline` is not forked. The lookup crate takes crates.io 0.8.0. 0.8 fixes
+> a bencode stack overflow that aborts the process on one crafted datagram. It
+> also defaults the DHT to client mode and sends the BEP 44 put without a target.
 >
 > **Why it has to exist.** These two crates sit between
 > [`habilis-network`](https://github.com/agent-habilis/habilis-network) and iroh. habilis-network needs a
