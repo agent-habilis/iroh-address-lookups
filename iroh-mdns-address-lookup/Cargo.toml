@@ -23,7 +23,7 @@ data-encoding = "2.10"
 derive_more = { version = "2.1", features = ["debug"] }
 futures-util = "0.3"
 # FORK: agent-habilis/iroh, not crates.io. See the repo README -- this fork
-# exists only to repoint these two lines, and carries no functional change.
+# exists only to repoint the 3 iroh lines in this manifest (2 below, 1 in dev-dependencies), and carries no functional change.
 #
 # This crate sits between habilis-network and iroh, and it named iroh from crates.io
 # while habilis-network names a fork. Two irohs in one graph, and the AddressLookup impl
