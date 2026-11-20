@@ -27,7 +27,7 @@ derive_more = { version = "2.1", features = ["debug"] }
 iroh = { version = "=1.0.3", git = "https://github.com/agent-habilis/iroh", rev = "59ce32952fe36506541f7d891a16eb1a5fda734f", default-features = false }
 iroh-base = { version = "=1.0.3", git = "https://github.com/agent-habilis/iroh", rev = "59ce32952fe36506541f7d891a16eb1a5fda734f", default-features = false, features = ["key", "relay"] }
 iroh-dns = { version = "=1.0.3", git = "https://github.com/agent-habilis/iroh", rev = "59ce32952fe36506541f7d891a16eb1a5fda734f" }
-n0-mainline = "0.5"
+n0-mainline = { version = "0.8.0", git = "https://github.com/agent-habilis/n0-mainline", rev = "3eae833681713bcd53cc6402f57b4b6a73348ffe" }
 n0-error = "1.0.0"
 n0-future = "0.3.2"
 tokio = { version = "1.49", default-features = false, features = ["sync"] }
