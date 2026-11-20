@@ -614,7 +614,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c54e03a951783e8b327515db3f2a2fd0e3bed362a96b066f341ce66ed49b4ead"
 dependencies = [
  "data-encoding",
- "syn 2.0.119",
+ "syn 3.0.3",
 ]
 
 [[package]]
@@ -782,7 +782,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "39cab71617ae0d63f51a36d69f866391735b51691dbda63cf6f96d042b63efeb"
 dependencies = [
  "libc",
- "windows-sys 0.52.0",
+ "windows-sys 0.61.2",
 ]
 
 [[package]]
@@ -1436,7 +1436,7 @@ dependencies = [
 [[package]]
 name = "iroh"
 version = "1.0.3"
-source = "git+https://github.com/agent-habilis/iroh?rev=5d1260f7de2a68c5aeb6ffde47e8c38ecadf3ae7#5d1260f7de2a68c5aeb6ffde47e8c38ecadf3ae7"
+source = "git+https://github.com/agent-habilis/iroh?rev=fb49de6f84d97980ab4eeb23db6b70b137345d87#fb49de6f84d97980ab4eeb23db6b70b137345d87"
 dependencies = [
  "backon",
  "blake3",
@@ -1461,7 +1461,7 @@ dependencies = [
  "netwatch",
  "noq",
  "noq-proto",
- "noq-udp",
+ "noq-udp 1.1.0",
  "papaya",
  "pin-project",
  "portable-atomic",
@@ -1486,7 +1486,7 @@ dependencies = [
 [[package]]
 name = "iroh-base"
 version = "1.0.3"
-source = "git+https://github.com/agent-habilis/iroh?rev=5d1260f7de2a68c5aeb6ffde47e8c38ecadf3ae7#5d1260f7de2a68c5aeb6ffde47e8c38ecadf3ae7"
+source = "git+https://github.com/agent-habilis/iroh?rev=fb49de6f84d97980ab4eeb23db6b70b137345d87#fb49de6f84d97980ab4eeb23db6b70b137345d87"
 dependencies = [
  "curve25519-dalek",
  "data-encoding",
@@ -1504,7 +1504,7 @@ dependencies = [
 [[package]]
 name = "iroh-dns"
 version = "1.0.3"
-source = "git+https://github.com/agent-habilis/iroh?rev=5d1260f7de2a68c5aeb6ffde47e8c38ecadf3ae7#5d1260f7de2a68c5aeb6ffde47e8c38ecadf3ae7"
+source = "git+https://github.com/agent-habilis/iroh?rev=fb49de6f84d97980ab4eeb23db6b70b137345d87#fb49de6f84d97980ab4eeb23db6b70b137345d87"
 dependencies = [
  "arc-swap",
  "cfg_aliases",
@@ -1595,7 +1595,7 @@ dependencies = [
 [[package]]
 name = "iroh-relay"
 version = "1.0.3"
-source = "git+https://github.com/agent-habilis/iroh?rev=5d1260f7de2a68c5aeb6ffde47e8c38ecadf3ae7#5d1260f7de2a68c5aeb6ffde47e8c38ecadf3ae7"
+source = "git+https://github.com/agent-habilis/iroh?rev=fb49de6f84d97980ab4eeb23db6b70b137345d87#fb49de6f84d97980ab4eeb23db6b70b137345d87"
 dependencies = [
  "blake3",
  "bytes",
@@ -1897,7 +1897,7 @@ dependencies = [
  "futures-core",
  "lru",
  "n0-error",
- "noq-udp",
+ "noq-udp 1.1.1",
  "rand",
  "serde",
  "serde_bencode",
@@ -2024,7 +2024,7 @@ dependencies = [
 [[package]]
 name = "netwatch"
 version = "0.19.1"
-source = "git+https://github.com/agent-habilis/net-tools?rev=e02960255ef2f5b2ba4aa3d4cf195e0b8673f370#e02960255ef2f5b2ba4aa3d4cf195e0b8673f370"
+source = "git+https://github.com/agent-habilis/net-tools?rev=5eb9b1bfc37e6e20dfe61076f113a42b8970141f#5eb9b1bfc37e6e20dfe61076f113a42b8970141f"
 dependencies = [
  "atomic-waker",
  "bytes",
@@ -2041,7 +2041,7 @@ dependencies = [
  "netlink-packet-route",
  "netlink-proto",
  "netlink-sys",
- "noq-udp",
+ "noq-udp 1.1.0",
  "objc2-core-foundation",
  "objc2-system-configuration",
  "pin-project-lite",
@@ -2060,13 +2060,13 @@ dependencies = [
 [[package]]
 name = "noq"
 version = "1.1.0"
-source = "git+https://github.com/agent-habilis/noq?rev=2b2252ce483cd9a5f88296fa7989bc54324a0bdf#2b2252ce483cd9a5f88296fa7989bc54324a0bdf"
+source = "git+https://github.com/agent-habilis/noq?rev=13fad1646e70daa0a29d23ac9953e8c6a58141f3#13fad1646e70daa0a29d23ac9953e8c6a58141f3"
 dependencies = [
  "bytes",
  "cfg_aliases",
  "derive_more",
  "noq-proto",
- "noq-udp",
+ "noq-udp 1.1.0",
  "pin-project-lite",
  "rustc-hash",
  "rustls",
@@ -2081,7 +2081,7 @@ dependencies = [
 [[package]]
 name = "noq-proto"
 version = "1.1.0"
-source = "git+https://github.com/agent-habilis/noq?rev=2b2252ce483cd9a5f88296fa7989bc54324a0bdf#2b2252ce483cd9a5f88296fa7989bc54324a0bdf"
+source = "git+https://github.com/agent-habilis/noq?rev=13fad1646e70daa0a29d23ac9953e8c6a58141f3#13fad1646e70daa0a29d23ac9953e8c6a58141f3"
 dependencies = [
  "aes-gcm",
  "bytes",
@@ -2102,6 +2102,18 @@ dependencies = [
  "tinyvec",
  "tracing",
  "web-time",
+]
+
+[[package]]
+name = "noq-udp"
+version = "1.1.0"
+source = "git+https://github.com/agent-habilis/noq?rev=13fad1646e70daa0a29d23ac9953e8c6a58141f3#13fad1646e70daa0a29d23ac9953e8c6a58141f3"
+dependencies = [
+ "cfg_aliases",
+ "libc",
+ "socket2",
+ "tracing",
+ "windows-sys 0.61.2",
 ]
 
 [[package]]
@@ -2424,7 +2436,7 @@ dependencies = [
 [[package]]
 name = "portmapper"
 version = "0.19.1"
-source = "git+https://github.com/agent-habilis/net-tools?rev=e02960255ef2f5b2ba4aa3d4cf195e0b8673f370#e02960255ef2f5b2ba4aa3d4cf195e0b8673f370"
+source = "git+https://github.com/agent-habilis/net-tools?rev=5eb9b1bfc37e6e20dfe61076f113a42b8970141f#5eb9b1bfc37e6e20dfe61076f113a42b8970141f"
 dependencies = [
  "base64",
  "bytes",
@@ -2739,7 +2751,7 @@ dependencies = [
  "security-framework",
  "security-framework-sys",
  "webpki-root-certs",
- "windows-sys 0.52.0",
+ "windows-sys 0.61.2",
 ]
 
 [[package]]
@@ -2831,7 +2843,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5b55fb86dfd3a2f5f76ea78310a88f96c4ea21a3031f8d212443d56123fd0521"
 dependencies = [
  "libc",
- "windows-sys 0.52.0",
+ "windows-sys 0.61.2",
 ]
 
 [[package]]
@@ -3744,7 +3756,7 @@ version = "0.1.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c2a7b1c03c876122aa43f3020e6c3c3ee5c05081c9a00739faf7503aeba10d22"
 dependencies = [
- "windows-sys 0.52.0",
+ "windows-sys 0.61.2",
 ]
 
 [[package]]
