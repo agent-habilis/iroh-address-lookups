@@ -33,6 +33,17 @@ const DEFAULT_PKARR_TTL: u32 = 30;
 /// published immediately.
 const REPUBLISH_DELAY: Duration = Duration::from_secs(60 * 60);
 
+/// Delay before a publish tries again after an attempt that failed: the DHT is not ready, or the
+/// put found no node to take the record.
+///
+/// It is short, because a DHT that answers a few seconds later holds no record until the next
+/// attempt, and the republish delay is an hour. A put that succeeded waits the republish delay.
+///
+/// No local event says that a remote node came up, so a fixed delay is the model here. While the
+/// network is away, the node probes or puts once in this delay, with no end and no backoff. That is
+/// the cost, and it is on purpose.
+const PUBLISH_RETRY_DELAY: Duration = Duration::from_secs(5);
+
 /// Debounce delay before starting a publish loop.
 ///
 /// Rapid endpoint updates can trigger repeated `publish` calls in quick succession.
@@ -272,12 +283,17 @@ impl DhtAddressLookup {
             return;
         };
         if info.routing_table_size() == 0 {
-            let Ok(bootstrapped) = this.0.dht.bootstrapped().await else {
-                tracing::error!("dht bootstrap probe failed; stopping publish task");
-                return;
-            };
-            if !bootstrapped {
-                tracing::warn!("dht bootstrap probe returned not ready");
+            // No put before the DHT is ready: a put with an empty routing table finds no node.
+            loop {
+                let Ok(bootstrapped) = this.0.dht.bootstrapped().await else {
+                    tracing::error!("dht bootstrap probe failed; stopping publish task");
+                    return;
+                };
+                if bootstrapped {
+                    break;
+                }
+                tracing::warn!("dht bootstrap probe returned not ready; trying again");
+                time::sleep(PUBLISH_RETRY_DELAY).await;
             }
         } else {
             // Coalesce bursts of updates: publish() replaces the previous task, so a short
@@ -293,21 +309,21 @@ impl DhtAddressLookup {
 
         loop {
             let res = this.0.dht.put_mutable(item.clone(), None).await;
-            match res {
+            let delay = match res {
                 Ok(_) => {
                     tracing::debug!("pkarr publish success. published under {z32}");
+                    this.0.republish_delay
                 }
                 Err(e) => {
-                    // we could do a smaller delay here, but in general DHT publish
-                    // not working is due to a network issue, and if the network changes
-                    // the task will be restarted anyway.
-                    //
                     // Being unable to publish to the DHT is something that is expected
                     // to happen from time to time, so this does not warrant a error log.
+                    // The record is not in the DHT, so the next attempt is soon and not
+                    // after the republish delay.
                     tracing::warn!("pkarr publish error: {}", e);
+                    PUBLISH_RETRY_DELAY
                 }
-            }
-            time::sleep(this.0.republish_delay).await;
+            };
+            time::sleep(delay).await;
         }
     }
 }
@@ -362,7 +378,7 @@ mod tests {
 
     use iroh_base::{RelayUrl, TransportAddr};
     use n0_error::{Result, StdResultExt};
-    use n0_mainline::Testnet;
+    use n0_mainline::{Dht, Testnet};
     use n0_tracing_test::traced_test;
     use url::Url;
 
@@ -409,6 +425,75 @@ mod tests {
         })
         .await
         .expect("timeout, relay_url not found on DHT");
+        Ok(())
+    }
+
+    /// **A record that no node took at the first put is put again when nodes appear.** A publish
+    /// that found no node to take its record waited the whole republish delay (one hour) before
+    /// its next put, so a DHT that answered a few seconds later still held no record for an hour.
+    /// Here the bootstrap address answers nobody at first, and the nodes come after the first
+    /// attempts.
+    #[tokio::test]
+    #[traced_test]
+    async fn a_publish_that_finds_no_node_is_put_again_when_the_nodes_appear() -> Result {
+        let secret = SecretKey::generate();
+        // The port of the first node of the testnet that comes later: nothing listens on it yet.
+        let socket = std::net::UdpSocket::bind("127.0.0.1:0").anyerr()?;
+        let port = socket.local_addr().anyerr()?.port();
+        drop(socket);
+        let bootstrap = [format!("127.0.0.1:{port}")];
+        let mut dht_builder = DhtBuilder::default();
+        dht_builder.bootstrap(&bootstrap);
+        let address_lookup = DhtAddressLookup::builder()
+            .secret_key(secret.clone())
+            .dht_builder(dht_builder)
+            .addr_filter(AddrFilter::unfiltered())
+            .build()?;
+        let relay_url: RelayUrl = Url::parse("https://example.com").anyerr()?.into();
+        let data = EndpointData::from_iter([TransportAddr::Relay(relay_url.clone())]);
+        address_lookup.publish(&data);
+
+        // The first attempts find no node to ask.
+        tokio::time::sleep(Duration::from_secs(3)).await;
+        let mut first_builder = Dht::builder();
+        let first = first_builder
+            .server_mode()
+            .no_bootstrap()
+            .port(port)
+            .build()
+            .anyerr()?;
+        let mut nodes = vec![first];
+        for _ in 0..2 {
+            let node = Dht::builder()
+                .server_mode()
+                .bootstrap(&bootstrap)
+                .build()
+                .anyerr()?;
+            nodes.push(node);
+        }
+        for node in &nodes {
+            node.bootstrapped().await.anyerr()?;
+        }
+
+        tokio::time::timeout(Duration::from_secs(40), async {
+            loop {
+                tokio::time::sleep(Duration::from_millis(200)).await;
+                let mut found_relay_urls = BTreeSet::new();
+                let items = address_lookup
+                    .resolve(secret.public())
+                    .unwrap()
+                    .collect::<Vec<_>>()
+                    .await;
+                for item in items.into_iter().flatten() {
+                    found_relay_urls.extend(item.relay_urls().cloned());
+                }
+                if found_relay_urls.contains(&relay_url) {
+                    break;
+                }
+            }
+        })
+        .await
+        .expect("the record was not put again after the nodes appeared");
         Ok(())
     }
 }
