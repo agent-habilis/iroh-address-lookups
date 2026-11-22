@@ -475,11 +475,19 @@ mod tests {
             node.bootstrapped().await.anyerr()?;
         }
 
+        // The record is read through a second DHT that publishes nothing and knows only the
+        // nodes: the publisher can answer from its own put that is still in flight, which would
+        // pass with no remote node holding the record.
+        let mut reader_builder = DhtBuilder::default();
+        reader_builder.bootstrap(&bootstrap);
+        let reader = DhtAddressLookup::builder()
+            .dht_builder(reader_builder)
+            .build()?;
         tokio::time::timeout(Duration::from_secs(40), async {
             loop {
                 tokio::time::sleep(Duration::from_millis(200)).await;
                 let mut found_relay_urls = BTreeSet::new();
-                let items = address_lookup
+                let items = reader
                     .resolve(secret.public())
                     .unwrap()
                     .collect::<Vec<_>>()
